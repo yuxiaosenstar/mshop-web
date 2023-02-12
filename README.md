@@ -1,24 +1,3 @@
-# mshop-web
+## 启动容器
 
-## Project setup
-```
-pnpm install
-```
-
-### Compiles and hot-reloads for development
-```
-pnpm run serve
-```
-
-### Compiles and minifies for production
-```
-pnpm run build
-```
-
-### Lints and fixes files
-```
-pnpm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+docker run -id --name=mshop-web -p 80:80 yuxiaosen/mshop-web
