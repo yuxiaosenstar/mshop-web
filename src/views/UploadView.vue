@@ -76,6 +76,7 @@ export default {
       if (file.url) {
         delFile({ filename: file.name }).then((res) => {
           if (res.success) {
+            this.getList();
             this.$message.success("已移除" + file.name);
           } else {
             this.$message.error(res.reason);
