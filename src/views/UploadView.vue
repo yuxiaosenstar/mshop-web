@@ -37,13 +37,15 @@ export default {
       this.$refs.upload.submit();
     },
     handleRemove(file) {
-      delFile({ filename: file.name }).then((res) => {
-        if (res.success) {
-          this.$message.success("已移除" + file.name);
-        } else {
-          this.$message.error(res.reason);
-        }
-      });
+      if (file.url) {
+        delFile({ filename: file.name }).then((res) => {
+          if (res.success) {
+            this.$message.success("已移除" + file.name);
+          } else {
+            this.$message.error(res.reason);
+          }
+        });
+      }
     },
     handlePreview(file) {
       if (file.url) {
