@@ -27,13 +27,17 @@
         @mouseenter="active = index"
       >
         <video
-          v-if="videoSuffix.some((val) => fileObj.name.endsWith(val))"
+          v-if="
+            videoSuffix.some((val) => fileObj.name.toLowerCase().endsWith(val))
+          "
           class="video"
           :src="fileObj.url"
           :controls="active === index"
         ></video>
         <el-image
-          v-if="imgSuffix.some((val) => fileObj.name.endsWith(val))"
+          v-if="
+            imgSuffix.some((val) => fileObj.name.toLowerCase().endsWith(val))
+          "
           :src="fileObj.url"
           fit="fill"
           lazy
@@ -54,7 +58,7 @@ export default {
       uploadUrl: serverPath + "/upload/",
       fileList: [],
       active: -1,
-      videoSuffix: [".mp4"],
+      videoSuffix: [".mp4", ".mov"],
       imgSuffix: [".jpeg", ".jpg", ".png"],
     };
   },
@@ -64,7 +68,7 @@ export default {
         return (
           fileObj.url &&
           [...this.videoSuffix, ...this.imgSuffix].some((val) =>
-            fileObj.name.endsWith(val)
+            fileObj.name.toLowerCase().endsWith(val)
           )
         );
       });
