@@ -27,13 +27,13 @@
         @mouseenter="active = index"
       >
         <video
-          v-if="fileObj.name.endsWith('.mp4')"
+          v-if="videoSuffix.some((val) => fileObj.name.endsWith(val))"
           class="video"
           :src="fileObj.url"
           :controls="active === index"
         ></video>
         <el-image
-          v-if="fileObj.name.endsWith('.jpeg')"
+          v-if="imgSuffix.some((val) => fileObj.name.endsWith(val))"
           :src="fileObj.url"
           fit="fill"
           lazy
@@ -54,6 +54,8 @@ export default {
       uploadUrl: serverPath + "/upload/",
       fileList: [],
       active: -1,
+      videoSuffix: [".mp4"],
+      imgSuffix: [".jpeg", ".jpg", ".png"],
     };
   },
   computed: {
@@ -61,7 +63,9 @@ export default {
       return this.fileList.filter((fileObj) => {
         return (
           fileObj.url &&
-          [".mp4", ".jpeg"].some((val) => fileObj.name.endsWith(val))
+          [...this.videoSuffix, ...this.imgSuffix].some((val) =>
+            fileObj.name.endsWith(val)
+          )
         );
       });
     },
@@ -109,8 +113,6 @@ export default {
       });
     },
     handleSuccess() {
-      // let target = fileList.find((val) => val.name === file.name);
-      // this.$set(target, "url", this.uploadUrl + response.filename);
       this.getList();
     },
   },
