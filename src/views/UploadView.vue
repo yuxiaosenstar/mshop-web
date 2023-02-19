@@ -46,7 +46,8 @@
 </template>
 <script>
 import { getFileList, delFile } from "@/api/files";
-import { serverPath } from "@/api/config";
+import { serverPath, wsPath } from "@/api/config";
+
 export default {
   data() {
     return {
@@ -67,6 +68,14 @@ export default {
   },
   mounted() {
     this.getList();
+    let socket = new WebSocket(wsPath);
+    socket.onopen = (e) => {
+      console.log("WebScoket连接成功!", e);
+    };
+    socket.onmessage = (e) => {
+      console.log("客户端收到：", e);
+      this.getList();
+    };
   },
   methods: {
     submitUpload() {
